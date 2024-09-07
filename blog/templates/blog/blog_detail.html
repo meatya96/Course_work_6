@@ -1,0 +1,36 @@
+{% extends 'mailing/base.html' %}
+{% load my_tags %}
+{% block content %}
+<section class="jumbotron text-center">
+    <div class="container">
+        <h2 class="jumbotron-heading mb-4">Информация о статье</h2>
+    </div>
+</section>
+<section class="jumbotron text-center">
+    <div class="container">
+        <div class="col-12">
+            <img src="{{ blog.preview | media_filter }}" class="img-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-body">
+                            <p class="card-text">Заголовок: {{ object.title }}</p>
+                            <p class="card-text">Slug: {{ object.slug }}</p>
+                            <p class="card-text">Содержимое: {{ object.text }}</p>
+                            <p class="card-text">Дата создания: {{ object.created_at }}</p>
+                            <p class="card-text">Количество просмотров: {{ object.views_count }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a class="btn btn-primary" href="{% url 'blog:blog_list'%}" role="button">Назад</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

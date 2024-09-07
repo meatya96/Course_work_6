@@ -1,0 +1,36 @@
+{% extends 'mailing/base.html' %}
+{% block content %}
+<section class="jumbotron text-center">
+    <div class="container">
+        <h2 class="jumbotron-heading">Список пользователей</h2>
+    </div>
+</section>
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            {% for user in object_list %}
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <p class="card-text">Email пользователя: {{ user.email }}</p>
+                        <p class="card-text">Телефон пользователя: {{ user.phone }}</p>
+                        <p class="card-text">Статус: {{ user.is_active }}</p>
+                        <p class="card-text">Роль: {{ user.is_stuff }}</p>
+                        <p class="card-text">Активность: {{ user.is_stuff }}</p>
+                        {% if user.is_superuser or perms.users.block_users %}
+                            {% if user.is_active %}
+                            <a href="{% url 'users:block_user' user.pk %}" role="button"
+                               class="btn btn-sm btn-outline-danger">Деактивировать</a>
+                            {% else %}
+                            <a href="{% url 'users:block_user' user.pk %}" role="button"
+                               class="btn btn-sm btn-outline-success">Активировать</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

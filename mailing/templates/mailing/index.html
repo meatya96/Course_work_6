@@ -1,0 +1,57 @@
+{% extends 'mailing/base.html' %}
+{% load my_tags %}
+{% block content %}
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Сервис рассылки сообщений</h1>
+        <p class="lead text-muted">MailingForYou</p>
+        <p>
+            {% if user.is_authenticated %}
+            <a href="{% url 'mailing:client_create' %}" class="btn btn-primary my-2">Добавить клиента</a>
+            <a href="{% url 'mailing:message_create' %}" class="btn btn-primary my-2">Добавить сообщение</a>
+            <a href="{% url 'mailing:mailing_create' %}" class="btn btn-primary my-2">Добавить рассылку</a>
+            <a href="{% url 'blog:blog_create' %}" class="btn btn-primary my-2">Добавить статью</a>
+            {% else %}
+            <a href="{% url 'users:login' %}" class="btn btn-primary my-2">Войти</a>
+            <a href="{% url 'users:register' %}" class="btn btn-secondary my-2">Зарегистрироваться</a>
+            {% endif %}
+        </p>
+    </div>
+</section>
+<section class="text-center">
+    <div class="container">
+        <h3>Статистика сайта</h3>
+    </div>
+    <div class="container d-flex justify-content-center">
+        <div class="col-6 d-flex justify-content-center">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <p class="card-text">Всего рассылок: {{ mailings }}</p>
+                    <p class="card-text">Активных рассылок: {{ active_mailings }}</p>
+                    <p class="card-text">Количество уникальных клиентов: {{ unique_clients }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="text-center">
+    <div class="container d-flex justify-content-center">
+        <h3>Случайный блог с сайта</h3>
+    </div>
+    <div class="container  d-flex justify-content-center">
+        {% for blog in random_blog %}
+        <div class="col-4">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <img src="{{ blog.preview | media_filter }}" class="img-fluid">
+                    <p class="card-text">Заголовок: {{ blog.title }}</p>
+                    <p class="card-text">Содержание: {{ blog.text|slice:100}}</p>
+                    <p class="card-text">Статья создана: {{ blog.created_at }}</p>
+                    <p class="card-text">Количество просмотров: {{ blog.views_count }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

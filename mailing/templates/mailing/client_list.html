@@ -1,0 +1,40 @@
+{% extends 'mailing/base.html' %}
+{% block content %}
+<section class="jumbotron text-center">
+    <div class="container">
+        <h2 class="jumbotron-heading">Список клиентов</h2>
+    </div>
+</section>
+<div class="album py-5 bg-light">
+    <div class="container">
+        <p>
+            <a class="btn btn-outline-primary" href="{% url 'mailing:client_create' %}">Добавить клиента</a>
+        </p>
+        <div class="row">
+            {% for client in object_list %}
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <p class="card-text">ФИО клиента: {{ client.name }}</p>
+                        <p class="card-text">Email клиента: {{ client.email }}</p>
+                        <p class="card-text">Комментарий: {{ client.comment }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                {% if user.is_superuser or user == client.owner %}
+                                <a href="{% url 'mailing:client_detail' client.pk %}" role="button"
+                                   class="btn btn-sm btn-outline-info">Просмотр</a>
+                                <a href="{% url 'mailing:client_update' client.pk %}" role="button"
+                                   class="btn btn-sm btn-outline-primary">Редактировать</a>
+                                <a href="{% url 'mailing:client_delete' client.pk %}" role="button"
+                                   class="btn btn-sm btn-outline-danger">Удалить</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

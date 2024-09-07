@@ -1,0 +1,27 @@
+{% extends 'mailing/base.html' %}
+{% block content %}
+<section class="jumbotron text-center">
+    <div class="container">
+        <h2 class="jumbotron-heading">Список логов</h2>
+    </div>
+</section>
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            {% for log in object_list %}
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-body">
+                        <p class="card-text">Время: {{ log.time }}</p>
+                        <p class="card-text">Статус: {{ log.status }}</p>
+                        <p class="card-text">Ответ сервера: {{ log.server_answer }}</p>
+                        <p class="card-text">Рассылка: {{ log.mailing }}</p>
+                        <p class="card-text">Клиенты: {{ log.clients }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
